@@ -1,6 +1,9 @@
 package br.com.etec.model;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
@@ -49,6 +52,34 @@ public class ClassePrincipal implements Initializable{
 				cmbTipo.setItems(lista3);
 		
 	}
+	
+	
+	// Método para inserir dados no banco de dados
+    public void inserirDados(String valor) {
+        String sql = "INSERT INTO tabela (coluna1, coluna2, coluna3) VALUES (?, ?, ?)";
+        
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        
+        try {
+            conn = Conexao.conectar();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, valor);
+            pstmt.executeUpdate();
+            System.out.println("Inserção bem-sucedida!");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+        	Conexao.fechar(conn);
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 	
 	
 }
