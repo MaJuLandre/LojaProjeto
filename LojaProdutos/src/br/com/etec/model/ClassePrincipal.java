@@ -64,7 +64,9 @@ public class ClassePrincipal implements Initializable{
         try {
             conn = Conexao.conectar();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, valor);
+            pstmt.setString(1, tipoProduto);
+            pstmt.setString(2, marcaProduto);
+            pstmt.setString(3, modeloProduto);
             pstmt.executeUpdate();
             System.out.println("Inserção bem-sucedida!");
         } catch (SQLException e) {
